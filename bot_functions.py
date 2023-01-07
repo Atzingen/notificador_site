@@ -1,5 +1,5 @@
 import telegram
-from telegram import Update
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CallbackContext
 
 import db_manager
@@ -38,8 +38,37 @@ async def dell_notificador(update: Update, context: CallbackContext):
                                        text=textos.dell_notificador_incorreto,
                                        parse_mode=telegram.constants.ParseMode.MARKDOWN_V2)
 
+async def dell_account(update: Update, context: CallbackContext):
+    # db_manager.delete_account(update.effective_chat.id)
+    buttons = [
+        [InlineKeyboardButton("✅ Sim", callback_data="Sim"),
+         InlineKeyboardButton("❌ Não", callback_data="Não")],
+    ]
+    reply_markup = InlineKeyboardMarkup(buttons)
+    await context.bot.send_message(chat_id=update.effective_chat.id, 
+                                   reply_markup=reply_markup,
+                                   text=textos.delete_account_confirm)
+
 async def list_notificador(update: Update, context: CallbackContext):
     notifications = db_manager.get_notifications_list(update.effective_chat.id)
     txt_notificadores = textos.gera_lista_notificadores(notifications)
-    await context.bot.send_message(chat_id=update.effective_chat.id, 
-                                   text=txt_notificadores)
+    if txt_notificadores:
+        await context.bot.send_message(chat_id=update.effective_chat.id, 
+                                    text=txt_notificadores)
+    else:
+        await context.bot.send_message(chat_id=update.effective_chat.id, 
+                                    text=textos.txt_sem_notificadores,
+                                    parse_mode=telegram.constants.ParseMode.MARKDOWN_V2)
+
+async def button(update: Update, context: CallbackContext):
+    query = update.callback_query
+    data = query.data
+
+    if data == "Sim":
+        db_manager.delete_user(update.effective_chat.id)
+        await context.bot.send_message(chat_id=update.effective_chat.id, 
+                                       text=textos.delete_account_success,
+                                       parse_mode=telegram.constants.ParseMode.MARKDOWN_V2)
+    else:
+        await context.bot.send_message(chat_id=update.effective_chat.id, 
+                                       text=f"You clicked button {data}.")

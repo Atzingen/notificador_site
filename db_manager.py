@@ -49,3 +49,7 @@ def delete_notification(user_id: int, site_name: str):
     conn = engine.connect()
     query = db.delete(user).where(user.c.user_telegram_id == user_id).where(user.c.site_name == site_name)
     conn.execute(query)
+
+def delete_user(user_id: int):
+    conn = engine.connect()
+    query = db.delete(user).where(user.c.user_telegram_id == user_id)
