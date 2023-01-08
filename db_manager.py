@@ -4,7 +4,6 @@ from sqlalchemy import Table, Column, Integer, String
 
 engine = db.create_engine('sqlite:///base.db')
 metadata_obj = MetaData()
-# conn = engine.connect()
 
 user = Table(
     "notification",
@@ -21,6 +20,7 @@ def create_table():
 def get_all_sites():
     conn = engine.connect()
     query = db.select([user.columns.user_telegram_id, 
+                       user.columns.site_name,
                        user.columns.site_url, 
                        user.columns.site_hash])
     return conn.execute(query).all()

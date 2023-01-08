@@ -1,4 +1,5 @@
 import os
+from functools import partial
 import logging
 from dotenv import load_dotenv
 import logging
@@ -29,5 +30,10 @@ application.add_handler(add_notificador_handler)
 application.add_handler(list_notificador_handler)
 application.add_handler(dell_notificador_handler)
 application.add_handler(dell_account_handler)
+
+job_queue = application.job_queue
+job_queue.run_repeating(buscador.check_updates_all,
+                        interval=30, 
+                        first=0)
 
 application.run_polling()

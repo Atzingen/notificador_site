@@ -1,3 +1,10 @@
+def gera_lista_notificadores(notifications):
+    lista_notificadores = 'Sites com notificadores cadastrados:\n'
+    for notification in notifications:
+        lista_notificadores += f'Identificador: {notification[0]} \n URL: {notification[1]}\n\n'
+    return lista_notificadores
+
+
 help_message = '''*✅Mensagem de Ajuda do Bot Notificador✅*
 
 🤖 Possíveis comandos 🤖:
@@ -69,8 +76,3 @@ Ao apagar a conta, todos os notificadores cadastrados serão apagados.
 Caso deseje realmente apagar a conta, confirme (ou cancele) o pedido no botão abaixo.
 '''
 
-def gera_lista_notificadores(notifications):
-    lista_notificadores = 'Sites com notificadores cadastrados:\n'
-    for notification in notifications:
-        lista_notificadores += f'Identificador: {notification[0]} \n URL: {notification[1]}\n\n'
-    return lista_notificadores

@@ -1,3 +1,4 @@
+import logging
 import telegram
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CallbackContext
@@ -7,7 +8,6 @@ import textos
 
 def check_registered(func):
     async def wrapper(update: Update, context: CallbackContext):
-        print("Checando usuário")
         if not db_manager.check_user_exists(update.effective_chat.id):
             print("Usuário não registrado")
             return await context.bot.send_message(chat_id=update.effective_chat.id,
@@ -34,6 +34,8 @@ async def add_notificador(update: Update, context: CallbackContext):
         await context.bot.send_message(chat_id=update.effective_chat.id,
                                        text=f"Notificador {identificador_do_site} adicionado com sucesso!")	
     except Exception as e:
+        logging.debug(text)
+        logging.debug(e)
         await context.bot.send_message(chat_id=update.effective_chat.id, 
                                  text=textos.add_notificador_incorreto,
                                  parse_mode=telegram.constants.ParseMode.MARKDOWN_V2)
@@ -54,7 +56,6 @@ async def dell_notificador(update: Update, context: CallbackContext):
 
 @check_registered   
 async def dell_account(update: Update, context: CallbackContext):
-    # db_manager.delete_account(update.effective_chat.id)
     buttons = [
         [InlineKeyboardButton("✅ Sim", callback_data="Sim"),
          InlineKeyboardButton("❌ Não", callback_data="Não")],
@@ -79,7 +80,6 @@ async def list_notificador(update: Update, context: CallbackContext):
 async def button(update: Update, context: CallbackContext):
     query = update.callback_query
     data = query.data
-
     if data == "Sim":
         db_manager.delete_user(update.effective_chat.id)
         await context.bot.send_message(chat_id=update.effective_chat.id, 
