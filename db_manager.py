@@ -24,6 +24,11 @@ def get_all_sites():
                        user.columns.site_url, 
                        user.columns.site_hash])
     return conn.execute(query).all()
+
+def check_user_exists(user_id: int):
+    conn = engine.connect()
+    query = db.select([user]).where(user.c.user_telegram_id == user_id)
+    return conn.execute(query).all() != []
     
 def get_notifications_list(user_id: int):
     conn = engine.connect()
@@ -53,3 +58,4 @@ def delete_notification(user_id: int, site_name: str):
 def delete_user(user_id: int):
     conn = engine.connect()
     query = db.delete(user).where(user.c.user_telegram_id == user_id)
+    conn.execute(query)
