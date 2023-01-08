@@ -16,5 +16,10 @@
             "command": "extension.executeFile",
             "priority": 3.5
         }
-    ]
+    ],
+    "python.testing.pytestArgs": [
+        "venv"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }
