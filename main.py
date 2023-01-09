@@ -34,6 +34,6 @@ application.add_handler(dell_account_handler)
 job_queue = application.job_queue
 job_queue.run_repeating(buscador.check_updates_all,
                         interval=6000, 
-                        first=0)
+                        first=10)
 
 application.run_polling()

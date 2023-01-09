@@ -9,7 +9,6 @@ import textos
 def check_registered(func):
     async def wrapper(update: Update, context: CallbackContext):
         if not db_manager.check_user_exists(update.effective_chat.id):
-            print("Usuário não registrado")
             return await context.bot.send_message(chat_id=update.effective_chat.id,
                                      text=textos.usuario_nao_registrado,
                                      parse_mode=telegram.constants.ParseMode.MARKDOWN_V2)
