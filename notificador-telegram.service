@@ -1,0 +1,14 @@
+# https://www.shubhamdipt.com/blog/how-to-create-a-systemd-service-in-linux/
+
+[Unit]
+Description=Executa o script que inicia o programa notificador
+
+[Service]
+User=gustavo
+WorkingDirectory=/home/gustavo/notificador_site
+ExecStart=/bin/bash /home/gustavo/notificador_site/run.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
