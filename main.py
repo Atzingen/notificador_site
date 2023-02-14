@@ -6,6 +6,9 @@ import logging
 from telegram.ext import CommandHandler, ApplicationBuilder, CallbackQueryHandler
 
 from bot_functions import *
+from db_manager import *
+
+create_table()
 
 load_dotenv() 
 logging.basicConfig(level=logging.INFO,
