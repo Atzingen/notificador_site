@@ -5,8 +5,8 @@ Description=Executa o script que inicia o programa notificador
 
 [Service]
 User=gustavo
-WorkingDirectory=/home/gustavo/notificador_site
-ExecStart=/bin/bash /home/gustavo/notificador_site/run.sh
+WorkingDirectory=~/notificador_site
+ExecStart=/bin/bash ~/notificador_site/run.sh
 Restart=always
 
 [Install]
