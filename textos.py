@@ -1,7 +1,7 @@
 def gera_lista_notificadores(notifications):
-    lista_notificadores = 'Sites com notificadores cadastrados:\n'
+    lista_notificadores = 'Sites com notificadores cadastrados:\n\n'
     for notification in notifications:
-        lista_notificadores += f'Identificador: {notification[0]} \n URL: {notification[1]}\n\n'
+        lista_notificadores += f'➡️Identificador: {notification[0]} \n🌐URL: {notification[1]}\n\n'
     return lista_notificadores
 
 
@@ -10,9 +10,13 @@ help_message = '''*✅Mensagem de Ajuda do Bot Notificador✅*
 🤖 Possíveis comandos 🤖:
 
 ➡️ /add\_notificador *identificador\-do\-site* **url\-do\-site** Adiciona um notificador ✅
+
 ➡️ /list\_notificador Lista os notificadores cadastrados 🌐
-➡️ /dell\_notificador *nome do notificador* Deleta um notificador ❌
+
+➡️ /dell\_notificador *nome do notificador* Deleta notificador ❌
+
 ➡️ /dell\_account Deleta sua conta ❌ 🏴‍☠️
+
 ➡️ /help Ajuda com os comandos ℹ️
 
 '''
