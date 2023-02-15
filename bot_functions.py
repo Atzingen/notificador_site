@@ -19,7 +19,13 @@ async def help_bot(update: Update, context: CallbackContext):
     await context.bot.send_message(chat_id=update.effective_chat.id, 
                              text=textos.help_message,
                              parse_mode=telegram.constants.ParseMode.MARKDOWN_V2)
- 
+
+@check_registered
+async def regular_text(update: Update, context: CallbackContext):
+    await context.bot.send_message(chat_id=update.effective_chat.id, 
+                            text=textos.help_message,
+                            parse_mode=telegram.constants.ParseMode.MARKDOWN_V2)
+
 async def add_notificador(update: Update, context: CallbackContext):
     text = update.message.text
     try:
@@ -33,36 +39,42 @@ async def add_notificador(update: Update, context: CallbackContext):
         await context.bot.send_message(chat_id=update.effective_chat.id,
                                        text=f"Notificador {identificador_do_site} adicionado com sucesso!")	
     except Exception as e:
-        logging.debug(text)
-        logging.debug(e)
+        logging.warning(text)
+        logging.warning(e)
         await context.bot.send_message(chat_id=update.effective_chat.id, 
                                  text=textos.add_notificador_incorreto,
                                  parse_mode=telegram.constants.ParseMode.MARKDOWN_V2)
 
 @check_registered   
 async def dell_notificador(update: Update, context: CallbackContext):
-    text = update.message.text
-    notificadores = text.split(' ')
-    if len(notificadores) > 1:
-        notificador = notificadores[1]
-        db_manager.delete_notification(update.effective_chat.id, notificador)
+    try:
+        text = update.message.text
+        notificadores = text.split(' ')
+        if len(notificadores) > 1:
+            notificador = notificadores[1]
+            if db_manager.delete_notification(update.effective_chat.id, notificador):
+                await context.bot.send_message(chat_id=update.effective_chat.id, 
+                                            text=f"Notificador {notificador} deletado com sucesso!")
+            else:
+                await context.bot.send_message(chat_id=update.effective_chat.id, 
+                                        text=textos.dell_notificador_incorreto,
+                                        parse_mode=telegram.constants.ParseMode.MARKDOWN_V2)
+    except Exception as e:
+        logging.warning(e)
         await context.bot.send_message(chat_id=update.effective_chat.id, 
-                                       text=f"Notificador {notificador} deletado com sucesso!")
-    else:
-        await context.bot.send_message(chat_id=update.effective_chat.id, 
-                                       text=textos.dell_notificador_incorreto,
-                                       parse_mode=telegram.constants.ParseMode.MARKDOWN_V2)
+                                        text=textos.dell_notificador_incorreto,
+                                        parse_mode=telegram.constants.ParseMode.MARKDOWN_V2)
 
 @check_registered   
 async def dell_account(update: Update, context: CallbackContext):
     buttons = [
         [InlineKeyboardButton("✅ Sim", callback_data="Sim"),
-         InlineKeyboardButton("❌ Não", callback_data="Não")],
+        InlineKeyboardButton("❌ Não", callback_data="Não")],
     ]
     reply_markup = InlineKeyboardMarkup(buttons)
     await context.bot.send_message(chat_id=update.effective_chat.id, 
-                                   reply_markup=reply_markup,
-                                   text=textos.delete_account_confirm)
+                                reply_markup=reply_markup,
+                                text=textos.delete_account_confirm)
 
 @check_registered   
 async def list_notificador(update: Update, context: CallbackContext):
@@ -76,14 +88,19 @@ async def list_notificador(update: Update, context: CallbackContext):
                                     text=textos.txt_sem_notificadores,
                                     parse_mode=telegram.constants.ParseMode.MARKDOWN_V2)
 
+@check_registered  
 async def button(update: Update, context: CallbackContext):
     query = update.callback_query
     data = query.data
     if data == "Sim":
         db_manager.delete_user(update.effective_chat.id)
         await context.bot.send_message(chat_id=update.effective_chat.id, 
-                                       text=textos.delete_account_success,
-                                       parse_mode=telegram.constants.ParseMode.MARKDOWN_V2)
+                                    text=textos.delete_account_success,
+                                    parse_mode=telegram.constants.ParseMode.MARKDOWN_V2)
     else:
         await context.bot.send_message(chat_id=update.effective_chat.id, 
-                                       text=f"You clicked button {data}.")
+                                    text=f"You clicked button {data}.")
+        
+def error_function(update, context):
+    logging.error("error_function")
+    logging.error('Update "%s" caused error "%s"', update, context.error)

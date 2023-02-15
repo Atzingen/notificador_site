@@ -53,9 +53,9 @@ def insert_notification(user_id: int, site_name: str,
 def delete_notification(user_id: int, site_name: str):
     conn = engine.connect()
     query = db.delete(user).where(user.c.user_telegram_id == user_id).where(user.c.site_name == site_name)
-    conn.execute(query)
+    return conn.execute(query).rowcount > 0
 
 def delete_user(user_id: int):
     conn = engine.connect()
     query = db.delete(user).where(user.c.user_telegram_id == user_id)
-    conn.execute(query)
+    return conn.execute(query).rowcount > 0

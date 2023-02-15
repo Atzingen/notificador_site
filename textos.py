@@ -1,7 +1,7 @@
 def gera_lista_notificadores(notifications):
     lista_notificadores = 'Sites com notificadores cadastrados:\n\n'
     for notification in notifications:
-        lista_notificadores += f'➡️Identificador: {notification[0]} \n🌐URL: {notification[1]}\n\n'
+        lista_notificadores += f' ➡️ {notification[0]} \n 🌐 URL: {notification[1]}\n\n'
     return lista_notificadores
 
 
