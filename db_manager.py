@@ -23,39 +23,52 @@ def get_all_sites():
                        user.columns.site_name,
                        user.columns.site_url, 
                        user.columns.site_hash])
-    return conn.execute(query).all()
+    result = conn.execute(query).all()
+    conn.close()
+    return result
 
 def check_user_exists(user_id: int):
     conn = engine.connect()
     query = db.select([user]).where(user.c.user_telegram_id == user_id)
-    return conn.execute(query).all() != []
+    result = conn.execute(query).all() != []
+    conn.close()
+    return result
     
 def get_notifications_list(user_id: int):
     conn = engine.connect()
     query = db.select([user.columns.site_name, user.columns.site_url]).\
                        where(user.c.user_telegram_id == user_id)
-    return conn.execute(query).all()
+    result = conn.execute(query).all()
+    conn.close()
+    return result
 
 def get_site_hash(user_id: int, site_name: str):
     conn = engine.connect()
     query = db.select([user]).where(user.c.user_telegram_id == user_id).\
                               where(user.c.site_name == site_name)
-    return conn.execute(query).fetchone()
+    result = conn.execute(query).fetchone()
+    conn.close()
+    return result
 
 def insert_notification(user_id: int, site_name: str, 
                         site_url: str, site_hash: str):  
     conn = engine.connect()
     query = db.insert(user).values(user_telegram_id=user_id, site_name=site_name, 
                                    site_url=site_url, site_hash=site_hash)
-    conn.execute(query)
+    result = conn.execute(query)
     conn.close()
+    return result
     
 def delete_notification(user_id: int, site_name: str):
     conn = engine.connect()
     query = db.delete(user).where(user.c.user_telegram_id == user_id).where(user.c.site_name == site_name)
-    return conn.execute(query).rowcount > 0
+    result = conn.execute(query).rowcount > 0
+    conn.close()
+    return result
 
 def delete_user(user_id: int):
     conn = engine.connect()
     query = db.delete(user).where(user.c.user_telegram_id == user_id)
-    return conn.execute(query).rowcount > 0
+    result = conn.execute(query).rowcount > 0
+    conn.close()
+    return result
