@@ -5,6 +5,7 @@ services:
     build: .
     container_name: telegram_bot
     restart: always
+    user: "${UID}:${GID}"
     env_file:
       - .env
     volumes:
