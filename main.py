@@ -6,13 +6,15 @@ import logging
 from telegram.ext import CommandHandler, ApplicationBuilder, \
      CallbackQueryHandler, MessageHandler, filters
 
-from bot_functions import *
-from db_manager import *
+os.makedirs('logs', exist_ok=True)
 
 load_dotenv() 
 logging.basicConfig(level=logging.INFO,
                     filename='logs/bot.log',
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+from bot_functions import *
+from db_manager import *
 
 try:
     create_table()
