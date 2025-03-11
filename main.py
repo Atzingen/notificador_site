@@ -7,6 +7,7 @@ from telegram.ext import CommandHandler, ApplicationBuilder, \
      CallbackQueryHandler, MessageHandler, filters
 
 os.makedirs('logs', exist_ok=True)
+os.makedirs('data', exist_ok=True)
 
 load_dotenv() 
 logging.basicConfig(level=logging.INFO,

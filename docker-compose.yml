@@ -10,4 +10,4 @@ services:
       - .env
     volumes:
       - ./logs:/app/logs
-      - ./base.db:/app/base.db
+      - ./data:/app/data

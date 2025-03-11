@@ -2,7 +2,7 @@ import sqlalchemy as db
 from sqlalchemy import MetaData
 from sqlalchemy import Table, Column, Integer, String, select, and_
 
-engine = db.create_engine('sqlite:///base.db')
+engine = db.create_engine('sqlite:///data/base.db')
 metadata_obj = MetaData()
 
 user = Table(
