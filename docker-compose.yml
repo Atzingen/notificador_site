@@ -9,5 +9,5 @@ services:
     env_file:
       - .env
     volumes:
-      - ./bot.log:/app/bot.log
+      - ./logs:/app/logs
       - ./base.db:/app/base.db

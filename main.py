@@ -11,7 +11,7 @@ from db_manager import *
 
 load_dotenv() 
 logging.basicConfig(level=logging.INFO,
-                    filename='bot.log',
+                    filename='logs/bot.log',
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 try:
