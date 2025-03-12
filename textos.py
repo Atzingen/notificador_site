@@ -5,7 +5,7 @@ def gera_lista_notificadores(notifications):
     return lista_notificadores
 
 
-help_message = '''*✅Mensagem de Ajuda do Bot Notificador✅*
+help_message = '''* ✅ Mensagem de Ajuda do Bot Notificador ✅ *
 
 🤖 Possíveis comandos 🤖:
 
